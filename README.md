@@ -431,9 +431,9 @@ Measured on a MacBook Air with 1,000,005 rows:
 
 | Phase | Time |
 |---|---|
-| BigQuery query (network + execution) | 5 – 10 seconds |
-| Cache insert (EhCache `putAll`) | 60 – 80 seconds |
-| Total reload cycle | ~70 – 90 seconds |
+| BigQuery query (network + execution) | 3 – 6 seconds |
+| Cache insert (EhCache `putAll`) | 40 – 60 seconds |
+| Total reload cycle | ~40 – 70 seconds |
 | Single record lookup from cache | < 1 millisecond |
 
 The cache insert time is consistent across reloads because the cache is cleared before every load — writing into an empty cache is always faster than overwriting existing entries.

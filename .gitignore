@@ -1,0 +1,22 @@
+# EhCache disk persistence — regenerated on startup
+cache-data/
+
+# Generated CSV — regenerated via Python script
+records.csv
+
+# Maven build output
+target/
+*.class
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+logs/

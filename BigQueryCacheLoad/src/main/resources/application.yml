@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: bqcache
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+server:
+  port: 8080
+
+bigquery:
+  project-id: bigquery-to-ehcache
+  dataset: cache_dataset
+  table: cache_table
+
+cache:
+  ttl-minutes: 5
+  heap-entries: 100000
+  offheap-gb: 1
+  disk-gb: 10
+  disk-path: ./cache-data
+  loader:
+    batch-size: 10000
+    parallel: false
+    threads: 4
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      bigquery:
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        register-health-indicator: true
+  retry:
+    instances:
+      bigquery:
+        max-attempts: 3
+        wait-duration: 2s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus, info, metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.example.bqcache: DEBUG
+    io.github.resilience4j: INFO

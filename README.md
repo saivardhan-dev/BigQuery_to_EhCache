@@ -440,7 +440,4 @@ The cache insert time is consistent across reloads because the cache is cleared 
 
 ---
 
-## License
-
-MIT
 
